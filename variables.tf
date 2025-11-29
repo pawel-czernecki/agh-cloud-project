@@ -23,9 +23,19 @@ variable "private_subnet_cidrs" {
   default     = ["10.0.2.0/23", "10.0.4.0/23"]
 }
 
-variable "ami_id" {
+variable "bastion_ami_id" {
   description = "AMI ID for the bastion host"
   default     = "ami-0fa3fe0fa7920f68e"
+}
+
+variable "ec2web_ami_id" {
+  description = "AMI ID for the EC2 instances"
+  default     = "ami-0fa3fe0fa7920f68e"
+}
+
+variable "ec2web_instance_type" {
+  description = "Instance type for the EC2 instances"
+  default     = "t3.micro"
 }
 
 variable "key_name" {
