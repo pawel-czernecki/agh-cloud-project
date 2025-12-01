@@ -67,7 +67,7 @@ resource "aws_security_group" "ec2web" {
   tags = { Name = "ec2web-sg" }
 }
 
-/*resource "aws_security_group" "rds" {
+resource "aws_security_group" "rds" {
   vpc_id = aws_vpc.agh-cloud-project-vpc.id
   ingress { 
     from_port = 3306
@@ -76,4 +76,4 @@ resource "aws_security_group" "ec2web" {
     security_groups = [aws_security_group.ec2web.id] 
   }
   tags = { Name = "rds-sg" }
-}*/
+}

@@ -38,34 +38,12 @@ resource "aws_secretsmanager_secret_rotation" "createrotation" {
   }
 }
 
-
-
-
-
-resource "aws_iam_role" "lambda_rotation_role" {
-  name = "lambda-rotation-role"
-
-  assume_role_policy = jsonencode({
-    Version = "2012-10-17"
-    Statement = [{
-      Action = "sts:AssumeRole"
-      Principal = {
-        Service = "lambda.amazonaws.com"
-      }
-      Effect = "Allow"
-    }]
-  })
-}
-
-resource "aws_iam_role_policy_attachment" "lambda_basic_execution" {
-  role       = aws_iam_role.lambda_rotation_role.name
-  policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
-}
-
-# (Opcjonalnie– jeśli rotujesz bazę RDS)
-resource "aws_iam_role_policy_attachment" "secretsmanager_full_access" {
-  role       = aws_iam_role.lambda_rotation_role.name
-  policy_arn = "arn:aws:iam::aws:policy/SecretsManagerReadWrite"
+resource "aws_lambda_permission" "allow_secrets_manager" {
+  statement_id  = "AllowSecretsManagerInvoke"
+  action        = "lambda:InvokeFunction"
+  principal     = "secretsmanager.amazonaws.com" 
+  function_name = aws_lambda_function.rotationlambda.function_name
+  source_arn    = aws_secretsmanager_secret.db.arn
 }
 
 resource "aws_lambda_function" "rotationlambda" {
@@ -73,7 +51,7 @@ resource "aws_lambda_function" "rotationlambda" {
   filename         = "lambda_function.zip"
   handler          = "lambda_function.lambda_handler"
   runtime          = "python3.12"
-  role             = aws_iam_role.lambda_rotation_role.arn
+  role             = "arn:aws:iam::951080160519:role/LabRole"
   timeout          = 60
   memory_size      = 256
 }

@@ -22,6 +22,12 @@ resource "aws_launch_template" "ec2_web" {
     dnf update -y
     dnf install -y nginx php php-fpm php-cli git
 
+    git clone https://github.com/pawel-czernecki/agh-cloud-project.git ~/app
+
+    rm -fr /usr/share/nginx/html/*
+
+    mv ~/app/app/* /usr/share/nginx/html/
+
     chown -R nginx:nginx /usr/share/nginx/html
     chmod -R 755 /usr/share/nginx/html
 
