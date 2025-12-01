@@ -26,6 +26,7 @@ resource "aws_launch_template" "ec2_web" {
 
     rm -fr /usr/share/nginx/html/*
 
+    # multicloud approach ;) - pogoda service
     cat >/etc/nginx/conf.d/default.conf <<EOL
     server{
 
