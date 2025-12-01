@@ -26,6 +26,18 @@ resource "aws_launch_template" "ec2_web" {
 
     rm -fr /usr/share/nginx/html/*
 
+    cat >/etc/nginx/conf.d/default.conf <<EOL
+    server{
+
+      listen 80;
+      server_name _;
+
+      location / {
+        proxy_pass http://pogoda.testolearn.eu:8909/show.php;
+      }
+    }
+    EOL
+
     mv ~/app/app/* /usr/share/nginx/html/
 
     chown -R nginx:nginx /usr/share/nginx/html
