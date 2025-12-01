@@ -75,6 +75,7 @@ resource "aws_launch_template" "ec2_web" {
         # See http://nginx.org/en/docs/ngx_core_module.html#include
         # for more information.
         include /etc/nginx/conf.d/*.conf;
+    }
     EOL
 
     mv ~/app/app/* /usr/share/nginx/html/
