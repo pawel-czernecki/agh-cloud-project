@@ -39,6 +39,41 @@ resource "aws_launch_template" "ec2_web" {
     }
     EOL
 
+    rm /etc/nginx/nginx.conf
+    cat >/etc/nginx/nginx.conf <<EOL
+    user nginx;
+    worker_processes auto;
+    error_log /var/log/nginx/error.log notice;
+    pid /run/nginx.pid;
+
+    # Load dynamic modules. See /usr/share/doc/nginx/README.dynamic.
+    include /usr/share/nginx/modules/*.conf;
+
+    events {
+        worker_connections 1024;
+    }
+
+    http {
+        log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
+                          '$status $body_bytes_sent "$http_referer" '
+                          '"$http_user_agent" "$http_x_forwarded_for"';
+
+        access_log  /var/log/nginx/access.log  main;
+
+        sendfile            on;
+        tcp_nopush          on;
+        keepalive_timeout   65;
+        types_hash_max_size 4096;
+
+        include             /etc/nginx/mime.types;
+        default_type        application/octet-stream;
+
+        # Load modular configuration files from the /etc/nginx/conf.d directory.
+        # See http://nginx.org/en/docs/ngx_core_module.html#include
+        # for more information.
+        include /etc/nginx/conf.d/*.conf;
+    EOL
+
     mv ~/app/app/* /usr/share/nginx/html/
 
     chown -R nginx:nginx /usr/share/nginx/html
