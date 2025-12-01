@@ -6,7 +6,10 @@ resource "aws_autoscaling_group" "asg" {
   target_group_arns   = [aws_lb_target_group.tg.arn]
   health_check_type   = "EC2"
   health_check_grace_period = 30
-  launch_template { id = aws_launch_template.ec2_web.id }
+  launch_template { 
+    id = aws_launch_template.ec2_web.id 
+    version = "$Latest"
+  }
 }
 
 resource "aws_launch_template" "ec2_web" {
