@@ -1,9 +1,9 @@
 <?php
 
 $servername = "localhost";
-$username = "twoja_nazwa_uzytkownika"; // Zmień na swoją nazwę użytkownika
-$password = "twoje_haslo";             // Zmień na swoje hasło
-$dbname = "twoja_nazwa_bazy";         // Zmień na nazwę Twojej bazy danych
+$username = "twoja_nazwa_uzytkownika";
+$password = "twoje_haslo";
+$dbname = "twoja_nazwa_bazy";
 
 $conn = new mysqli($servername, $username, $password, $dbname);
 

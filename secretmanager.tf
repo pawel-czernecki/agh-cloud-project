@@ -1,10 +1,10 @@
 resource "random_password" "db_password" {
   length           = 20
-  special          = true
+  special          = false
 }
 
 resource "aws_secretsmanager_secret" "db" {
-  name        = "rdsCreds"
+  name        = "rdsCredsb"
   description = "Credentials for Multi-AZ RDS database"
 }
 
