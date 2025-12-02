@@ -4,7 +4,7 @@ resource "aws_autoscaling_group" "asg" {
   min_size         = 2
   vpc_zone_identifier = aws_subnet.private[*].id
   target_group_arns   = [aws_lb_target_group.tg.arn]
-  health_check_type   = "EC2"
+  health_check_type   = "ELB"
   health_check_grace_period = 10
   launch_template { 
     id = aws_launch_template.ec2_web.id 
@@ -23,7 +23,7 @@ resource "aws_launch_template" "ec2_web" {
     aws_security_group.ec2web.id
   ]
   tags = { 
-    Name = "ec2-web-instance" 
+    Name = "ec2-web-instance2" 
   }
   user_data = base64encode(data.template_file.deploy.rendered)
 
