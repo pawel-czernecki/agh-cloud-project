@@ -10,6 +10,8 @@ resource "aws_autoscaling_group" "asg" {
     id = aws_launch_template.ec2_web.id 
     version = "$Latest"
   }
+
+  depends_on = [ aws_lb_target_group.tg ]
 }
 
 resource "aws_launch_template" "ec2_web" {
@@ -17,7 +19,9 @@ resource "aws_launch_template" "ec2_web" {
   image_id      = var.ec2web_ami_id
   instance_type = var.ec2web_instance_type
   key_name      = var.key_name
-  vpc_security_group_ids = [aws_security_group.ec2web.id]
+  vpc_security_group_ids = [
+    aws_security_group.ec2web.id
+  ]
   tags = { 
     Name = "ec2-web-instance" 
   }

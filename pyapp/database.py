@@ -16,7 +16,8 @@ def mysql_connection_factory():
         host=os.environ["DB_HOST"], 
         port=int(os.environ["DB_PORT"]), 
         database=os.environ["DB_DATABASE"], 
-        pool_name=None,
+        pool_name="foobar",
+        pool_size=1,
     )
 
 
@@ -56,7 +57,7 @@ def init_db():
     Base.metadata.create_all(bind=engine)
 
 
-def get_post(db: Session, post_id: int) -> Post | None:
+def get_post(db: Session, post_id: int):
     res = db.scalars(select(Post).where(Post.id == post_id))
 
     return res.one_or_none()

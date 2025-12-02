@@ -11,6 +11,7 @@ resource "aws_db_instance" "rds" {
 #   availability_zone       = element(var.availability_zones, count.index)
   multi_az = true
   db_subnet_group_name = aws_db_subnet_group.rds_subnet_group.name
+  vpc_security_group_ids = [aws_security_group.rds.id]
 }
 
 resource "aws_db_subnet_group" "rds_subnet_group" {
