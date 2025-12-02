@@ -34,7 +34,7 @@ then
     exit 1
 fi
 
-pip install -r requirements.txt
+pip install sqlalchemy mysql-connector-python "fastapi[standard]" boto3 aws-secretsmanager-caching
 
 if [ $? -ne 0 ]
 then

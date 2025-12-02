@@ -12,6 +12,10 @@ terraform {
 			source = "hashicorp/tls"
 			version = "~> 4.1.0"
 		}
+		template = {
+			source = "hashicorp/template"
+			version = "~> 2.2.0"
+		}	
     }
 
 	backend "s3" {
