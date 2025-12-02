@@ -44,3 +44,8 @@ def add_post(req_data: m.PostIn, s: dbDep) -> m.PostOut:
         name=db_post.name,
         content=db_post.content,
     )
+
+
+@app.get("/")
+def healthcheck():
+    return {"status": "ok"}
